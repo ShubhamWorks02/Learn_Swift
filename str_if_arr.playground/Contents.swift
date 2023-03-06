@@ -234,3 +234,4 @@ array.append(["name": 8, "age": 25])
 print(array.count)
 let namet = array[0]["name"]
 ////////////////
+
