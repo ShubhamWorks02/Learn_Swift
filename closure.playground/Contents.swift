@@ -276,3 +276,248 @@ let prac = { (a:Int,b:Int)->(Int,Int)
 
 prac(4,5)
 
+//
+//Monday 13/03
+
+//
+// Print "Hello, World!" message
+print("Hello, World!")
+
+// let hello = {(s1: Int,s2: Int)-> Bool in s1>s2}
+let hello = { print("sff")}
+hello()
+func expWithTrail(cls: ()-> Void ){
+    
+    print("func called ")
+    cls()
+    
+}
+// expWithTrail(cls : {
+//     print("fdjhbvc")//without using trailing
+// }
+// )
+
+// expWithTrail {
+//     print("fdjhbvc")//without using trailing
+// }
+
+expWithTrail() {
+    print("fdjhbvc")//with using trailing
+}
+
+func expWithTrail2(cls: ()-> Void , cls2 : () -> Void ){
+    
+    print("func called ")
+    cls()
+    cls2()
+    
+}
+
+// expWithTrail2(){
+//     print("cls1")
+// } cls2 : {
+//     print("cls2")
+// }
+
+// expWithTrail2(cls : {
+//     print("cls1")
+// }, cls2 : {
+//     print("cls2")
+// })
+//
+//var a = ({print("dff")},3)
+//print(a)
+
+let xd = { (  a : inout Int, b  : inout Int) in
+    
+    var temp = a
+    a=b
+    b=temp
+
+}
+var ab = 5
+var bc = 6
+
+xd(&ab,&bc)
+print(ab,bc)
+
+let optcls: (( Int,Int) -> Void)? = { a,b in // opt closure
+    print("")
+}
+
+//A completion handler in Swift is a function that calls back when a task completes. This is why it is also called a callback function.
+
+//A callback function is passed as an argument into another function. When this function completes running a task, it executes the callback function.
+
+func greet (_ completion: ()->(),yo :String) -> () { //Completion Handler
+    
+    print(yo)
+    completion()
+    
+}
+//callbacks are useful in Swift when dealing with asynchronous tasks.
+
+//In an asynchronous function, you can start the next task before the previous one completes. This way, you can deal with multiple requests simultaneously and complete more tasks in a shorter timeframe.
+
+//
+//
+//greet({ print("Task complete")}, yo: "Completion Hndler")
+//
+//let url = URL(string: "https://github.com/ShubhamWorks02/Learn_Swift/blob/main/loop.playground/Contents.swift")!
+//
+//let task = URLSession.shared.dataTask(with: url, completionHandler: { (data, response , error) in //class URLSession : NSObject, @unchecked Sendable
+//
+//    guard let data = data else {return}
+//
+//    var htmlContent = String(data: data, encoding: .utf8)!
+//
+//    print(htmlContent)
+//})
+//
+//task.resume()
+
+//URLSession.shared.dataTask(with: <#T##URLRequest#>, completionHandler: <#T##(Data?, URLResponse?, Error?) -> Void#>)
+//class     variable func
+
+//sync async
+// escaping non by default
+//weak strong use in cls
+//API ma kayo closure
+
+//lifecycle of cls including types
+//@noescape was an attribute in swift 2. This is deprecated from swift 3. The @noescape attribute is applied by default in Swift 3. Because closures are by default non-escaping in Swift 3, escaping closures need to be marked as such. And the @escaping attribute lets us do that.
+//A good example of an escaping closure is a completion handler. It’s executed in the future, when a lengthy task completes, so it outlives the function it was created in.
+//
+
+//Lifecycle of the @nonescaping closure:
+//1. Pass the closure as function argument, during the function call.
+//2. Do some additional work with function.
+//3. Function runs the closure.
+//4. Function returns the compiler back.
+
+
+
+//func expWithClsEsc (a : Int, handler  : ()->()){
+//
+////    handler()
+//    print("executing non escp",a)
+//
+//
+//}
+//
+//expWithClsEsc(a: 4){
+//
+//    print("handleer executing")
+//
+//}
+
+func getcls (name : String , cls : @escaping ()->()) {
+    
+    print(name)
+    let seconds = 3.0
+    
+    DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
+        
+        // Put your code which should be executed with a delay here
+        cls()
+        
+        
+    }
+    
+}
+
+getcls(name: "dfdsfdf"){
+    
+    print("escaping try")
+    
+}
+//
+
+//Lifecycle of the @escaping closure:
+//1. Pass the closure as function argument, during the function call.
+//2. Do some additional work in function.
+//3. Function execute the closure asynchronously
+//4. Function returns the compiler back.
+
+//compiler store memory for escaping closure
+
+//There are many different benefits of making non-escaping as by default. The most important benefits are performance and code optimisation by the compiler, because if the compiler knows that the closure is non-escaping, will take care about the memory allocation for the closure.
+
+//API call ma escaping
+//completion handler uses escaping
+
+func impleAuto (_ atCls : @autoclosure ()->()) {
+    
+    atCls()
+
+    
+}
+
+impleAuto( print("Autoclosure"))
+
+
+//Weak References
+//As the name suggests, a weak reference keeps a weak reference to the instance it references. This means that the reference to the instance is not taken into account by ARC. Remember that an instance is deallocated if no other objects have a strong reference to the instance.
+//Unowned References
+//Unowned references are similar to weak references in that they don't keep a strong reference to the instance they are referencing. They serve the same purpose as weak references, that is, they avoid strong reference cycles.
+//
+//But there are several key differences between weak and unowned references that are important to understand.
+//
+//
+//
+/////The first difference you need to know about is that an unowned reference is always expected to have a value. This is not true for weak references, which are set to nil if the instance they reference is deallocated. When that happens, the reference is set to nil./
+//Because a weak reference can be set to nil, it is always declared as an optional. That is the second difference between weak and unowned references
+class A  {
+    
+    weak var ane : B?
+    
+}
+class B {
+    
+}
+
+//
+//class Account1 {
+//
+//    // MARK: - Properties
+//
+//    var plan: Plan
+//
+//}
+//
+//class Plan {
+//
+//    // MARK: - Properties
+//
+//    var account: Account1
+//
+//    // MARK: - Initialization
+//
+//    init(account: Account1) {
+//        self.account = account
+//    }
+//
+//}
+
+class Account {
+
+    // MARK: - Properties
+
+    var plan: Plan?
+
+}
+
+class Plan {
+
+    // MARK: - Properties
+
+    unowned var account: Account
+
+    // MARK: - Initialization
+
+    init(account: Account) {
+        self.account = account
+    }
+
+}
+
