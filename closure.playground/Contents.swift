@@ -521,3 +521,95 @@ class Plan {
 
 }
 
+//typealias exd =   (Int)->(Any)
+//class Ty{
+//    func esccls (  cl : @escaping (Int)->(Any)){
+//
+//        //code
+//        
+//
+//    }
+//    esccls({ (Int)->(Any)[weak self](sum) in
+//        print("escaping ")
+//    }
+//}
+//
+
+class Ab {
+    
+    var clsx : ((Int)->())?
+    var num : Int?
+    
+}
+class Ba {
+    
+    var ref = Ab()
+   
+    init(){
+        
+        ref.clsx =   {[weak ref] a in
+            
+            print("dfhg")
+            print(a)
+            
+        }}
+    
+}
+var ba = Ba()
+ba.ref.clsx?(5)
+
+class Play {
+    
+    func game(){
+        print("Play game")
+    }
+    
+}
+// self / Self find diff
+
+//
+//func playing()->()->() { // Strong reference
+//
+//    var arena = Play()
+//
+//    let lol = {
+//
+//        arena.game()
+//        return
+//
+//    }
+//
+//    return lol
+//
+//}
+//
+//var strng = playing()
+//strng()
+
+
+func playing()->()->() { // weak reference
+    
+    var arena = Play()
+    
+    let lol = { [weak arena] in // weak arena part is captur list
+        
+        arena?.game()
+        return
+        
+    }
+    
+    return lol
+    
+}
+
+var strng = playing()
+print( strng())
+
+//Unowned capturing
+//An alternative to weak is unowned, which behaves more like implicitly unwrapped optionals. Like weak capturing, unowned capturing allows values to become nil at any point in the future.
+//you don’t need to unwrap optionals.
+//You should use unowned very carefully indeed.
+//When thing A owns thing B, and thing B owns thing A, you have what’s called a strong reference cycle, or often just a retain cycle.
+//When thing A owns thing B, and thing B owns thing A, you have what’s called a strong reference cycle, or often just a retain cycle.
+//When thing A owns thing B, and thing B owns thing A, you have what’s called a strong reference cycle, or often just a retain cycle.
+
