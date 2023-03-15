@@ -256,3 +256,9 @@ let mul = ArithMat.mul(five ,sixe)
 print(addd)
 
 //Optional is actually an enum, defined in relation to a generic type Wrapped. It has two cases: . none to represent the absence of a value, and . some to represent the presence of a value, which is stored as its associated value of type Wrapped.
+
+//hash value
+//access modifier
+//multiple init in cls struct
+//conveinient designated init diff
+
