@@ -103,7 +103,7 @@ extension Int {
 var someInt = 3
 someInt.sq()
 
-print(155418446[90])
+print(155418446[5])
 
 extension Int {
     
