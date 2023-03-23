@@ -355,3 +355,174 @@ if twoThreeFour == anotherTwoThreeFour {
 //Thrusday
 //23/03
 
+
+//------------------------------------------------------------------------------
+
+protocol Named {
+    var name: String { get }
+}
+protocol Aged {
+    var age: Int { get }
+}
+
+
+
+
+typealias proto = Named & Aged // Composition Protocol
+
+func confo  (combine : proto) { // Composition Protocol
+    
+    print(combine.name,combine.age)
+    
+}
+
+class Pers : Aged,Named{
+    var age : Int = 5
+    var name: String = "default string"
+}
+confo(combine: Pers())
+
+
+//------------------------------------------------------------------------------
+//Checking for Protocol Conformance
+
+protocol HasArea {
+    var area: Double { get }
+}
+
+class Circle: HasArea {
+    let pi = 3.1415927
+    var radius: Double
+    var area: Double { return pi * radius * radius }
+    init(radius: Double) { self.radius = radius }
+}
+
+class Country: HasArea {
+    
+    var area: Double
+    init(area: Double) { self.area = area }
+    
+}
+
+class Animal {
+    
+    var name : String?
+    
+}
+
+let obj : [AnyObject] = [
+
+    Circle(radius: 5.6),
+    Country(area: 4.5),
+    Animal()
+
+]
+//if let has = obj[0] as? HasArea {
+//    print(type(of: has))
+//}
+
+for ob in obj {
+    
+    if let has = ob as? HasArea {
+        print(has.area)
+    }else {
+        print("doesnt consist Area")
+    }
+
+}
+
+//
+//for ob in obj {
+//
+//
+//  print(ob as! HasArea)
+//
+//}
+
+//------------------------------------------------------------------------------
+
+//Optional Protocol Requirements
+//You can define optional requirements for protocols. These requirements don’t have to be implemented by types that conform to the protocol. Optional requirements are prefixed by the optional modifier as part of the protocol’s definition. Optional requirements are available so that you can write code that interoperates with Objective-C. Both the protocol and the optional requirement must be marked with the @objc attribute. Note that @objc protocols can be adopted only by classes, not by structures or enumerations.
+
+//When you use a method or property in an optional requirement, its type automatically becomes an optional. For example, a method of type (Int) -> String becomes ((Int) -> String)?. Note that the entire function type is wrapped in the optional, not the method’s return value.
+
+
+protocol RandomNumberGenerator {
+    
+    func randomNum ()->Int
+    //func hello ()
+    var x : Int {get}
+    
+}
+
+extension RandomNumberGenerator {
+    
+    func randomNum()->Int{
+        
+        return Int.random(in: 0...Int.max)
+        
+    }
+    var x :  Int {
+        return 5
+        
+    }
+}
+
+class Abc : RandomNumberGenerator {
+   
+    var x : Int {
+        return 1
+    }
+    
+}
+
+var abc = Abc()
+
+abc.randomNum()
+abc.x
+
+//
+//extension Array where Element : Equatable {
+//
+//    func allEqual ()->Bool{
+//
+//        for element in self{
+//            if element != self.first{return false}
+//        }
+//        return true
+//    }
+//}
+
+var arr1 = [2,3,4]
+var arr2 = [2,3,4,5]
+
+
+
+extension Array where Element : Equatable { //to find same element in same order
+    
+    func allEqual (arr : [Int])->Bool{
+        
+        if (arr.count != self.count){return false}
+        
+        var count = 0
+        
+        for element in self{
+            
+            if element as? Int != arr[count] {return false}
+            count+=1
+            
+        }
+        return true
+    }
+}
+
+print(arr2.allEqual(arr: arr1))
+
+ @objc protocol optPro {
+     
+    @objc optional func hello ()
+     func hello2()
+     
+ }
+
+
